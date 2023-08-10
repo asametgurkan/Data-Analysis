@@ -8,8 +8,6 @@ class DataFrameProcessor1:
     def replace_values_non_provided(self):
         column_list = []
         for column_name in self.dataframe.columns:
-            column_list.append(column_name)
-            for column_name in column_list:
                 self.dataframe.loc[self.dataframe[column_name].str.contains("unspecified", case=False, na=False), column_name] = np.nan
                 self.dataframe.loc[self.dataframe[column_name].str.contains("Not provided", case=False, na=False), column_name] = np.nan
                 self.dataframe.loc[self.dataframe[column_name].str.contains("Not sure", case=False, na=False), column_name] = np.nan
