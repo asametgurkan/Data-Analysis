@@ -6,7 +6,6 @@ class DataFrameProcessor1:
     # This function converts whole uncertain vlaues. 
 
     def replace_values_non_provided(self):
-        column_list = []
         for column_name in self.dataframe.columns:
                 self.dataframe.loc[self.dataframe[column_name].str.contains("unspecified", case=False, na=False), column_name] = np.nan
                 self.dataframe.loc[self.dataframe[column_name].str.contains("Not provided", case=False, na=False), column_name] = np.nan
@@ -16,9 +15,8 @@ class DataFrameProcessor1:
     # This function finds columns which have nan values, gives the number of missing values and deletes them. 
 
     def find_nan(self):
-        column_list = [i for i in self.dataframe.columns]
         print(f"Old shape of dataframe: {self.dataframe.shape}")
-        for i in column_list:
+        for i in self.dataframe.columns:
             if self.dataframe[i].isna().sum() != 0:
                 print(f"Columns which have nan values: {i} \nThere were {self.dataframe[i].isna().sum()} number of missing values and they are deleted.")
                 self.dataframe.drop(self.dataframe[self.dataframe[i].isna()].index, axis=0, inplace=True)
@@ -30,11 +28,9 @@ class DataFrameProcessor1:
 
 
     def replace_values_1(self):
-        column_list = []
         for column_name in self.dataframe.columns:
-            column_list.append(column_name)
             for i in list(self.dataframe[column_name].value_counts().keys()):
-                for column_name in column_list:
+                for column_name in self.dataframe.columns:
                     self.dataframe.loc[self.dataframe[column_name].str.contains("Daily", case=False), column_name] = "Daily"
                     self.dataframe.loc[self.dataframe[column_name].str.contains("Regularly", case=False), column_name] = "Regularly"
                     self.dataframe.loc[self.dataframe[column_name].str.contains("Occasionally", case=False), column_name] = "Occasionally"
@@ -46,9 +42,8 @@ class DataFrameProcessor1:
 
 
     def checker(self):
-        column_list = [i for i in self.dataframe.columns]
         columns_list_new = []
-        for i in column_list:
+        for i in self.dataframe.columns:
             key_list = ['Daily', 'Occasionally', 'Regularly', 'Rarely', 'Never']
             unique_values = self.dataframe[i].value_counts().index
             all_present = all(value in key_list for value in unique_values)
