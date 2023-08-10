@@ -14,24 +14,25 @@ class ClassificationModels:
     def __init__(self, X, y):
         self.X = X
         self.y = y
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.33)
 
     def predict_model(self, model_name):
-        if model_name == 'DecisionTree':
+        model_name = model_name.lower()
+        if model_name == 'decisiontree':
             model = DecisionTreeClassifier()
-        elif model_name == 'SVM':
+        elif model_name == 'svm':
             model = SVC()
-        elif model_name == 'RandomForest':
+        elif model_name == 'randomforest':
             model = RandomForestClassifier()
-        elif model_name == 'KNN':
+        elif model_name == 'knn':
             model = KNeighborsClassifier()
-        elif model_name == 'LogisticRegression':
+        elif model_name == 'logisticregression':
             model = LogisticRegression()
-        elif model_name == 'GaussianNB':
+        elif model_name == 'gaussiannb':
             model = GaussianNB()
-        elif model_name == 'MultinomialNB':
+        elif model_name == 'multinomialnb':
             model = MultinomialNB()
-        elif model_name == 'BernoulliNB':
+        elif model_name == 'bernoullinb':
             model = BernoulliNB()
         else:
             raise ValueError("Invalid model name.")
@@ -70,8 +71,8 @@ class ClassificationModels:
         plt.show()
 
 model_classifier = ClassificationModels(X, y)
+model_input = input("Enter the model name (DecisionTree, RandomForest, etc.) : ")
+model_classifier.predict_model(model_input)
 
-model_classifier.predict_model()
-model_classifier.all_model_performance()
 
     
